@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using LitJson;
 
 /// <summary>
 /// 利用ScriptableObject创建资源文件
@@ -20,5 +21,28 @@ public class BuildAsset : Editor {
         AssetDatabase.Refresh();
 
         Debug.Log("BuildAsset Success!");
+    }
+    [MenuItem("BuildAsset/Write")]
+    public static void XieRu()
+    {
+        string[] strs;
+        TextAsset ta = Resources.Load("ComponentColor2") as TextAsset;
+        JsonData jd = JsonMapper.ToObject(ta.ToString());
+        strs = new string[jd.Count];
+        for (int i = 0; i < jd.Count; i++)
+        {
+            strs[i] = jd[i]["name"].ToString();
+        }
+        for (int j=0;j<strs.Length;j++)
+        {
+            for (int k = j+1; k < strs.Length; k++)
+            {
+                if (strs[j] == strs[k])
+                {
+                    Debug.Log(strs[k]);
+                }
+            }
+        }
+        ExcelAccess.WriteExcel(strs,"ww.xlsx","www");
     }
 }

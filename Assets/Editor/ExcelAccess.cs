@@ -59,7 +59,7 @@ public class ExcelAccess
     /// </summary>
     /// <param name="excelName">excel文件名</param>
     /// <param name="sheetName">sheet名称</param>
-    public static void WriteExcel(string excelName, string sheetName)
+    public static void WriteExcel(string[] strd, string excelName, string sheetName)
     {
         //通过面板设置excel路径
         //string outputDir = EditorUtility.SaveFilePanel("Save Excel", "", "New Resource", "xlsx");
@@ -81,26 +81,12 @@ public class ExcelAccess
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(sheetName);
             //添加列名
             worksheet.Cells[1, 1].Value = "ID";
-            worksheet.Cells[1, 2].Value = "Product";
-            worksheet.Cells[1, 3].Value = "Quantity";
-            worksheet.Cells[1, 4].Value = "Price";
-            worksheet.Cells[1, 5].Value = "Value";
+            worksheet.Cells[1, 2].Value = "name";
 
-            //添加一行数据
-            worksheet.Cells["A2"].Value = 12001;
-            worksheet.Cells["B2"].Value = "Nails";
-            worksheet.Cells["C2"].Value = 37;
-            worksheet.Cells["D2"].Value = 3.99;
-            //添加一行数据
-            worksheet.Cells["A3"].Value = 12002;
-            worksheet.Cells["B3"].Value = "Hammer";
-            worksheet.Cells["C3"].Value = 5;
-            worksheet.Cells["D3"].Value = 12.10;
-            //添加一行数据
-            worksheet.Cells["A4"].Value = 12003;
-            worksheet.Cells["B4"].Value = "Saw";
-            worksheet.Cells["C4"].Value = 12;
-            worksheet.Cells["D4"].Value = 15.37;
+            for (int i = 2; i < strd.Length-2; i++)
+            {
+                worksheet.Cells[i, 1].Value = strd[i - 2];
+            }
 
             //保存excel
             package.Save();
